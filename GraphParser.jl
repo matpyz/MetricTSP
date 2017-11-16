@@ -13,8 +13,12 @@ end
 
 function parseGraphVLSI(filePath :: String) :: Tuple{Graph, Weights}
     return open(filePath) do handle
-        for i in 1:5
+        row = readline(handle)
+        row = readline(handle)
+        splitedRow = split(row)
+        while splitedRow[1] == "COMMENT" || splitedRow[1] == "COMMENT:"
             row = readline(handle)
+            splitedRow = split(row)
         end
         row = readline(handle)
         splitedRow = split(row)
@@ -24,10 +28,10 @@ function parseGraphVLSI(filePath :: String) :: Tuple{Graph, Weights}
         end
         w = Weights()
         locations = []
-        while row != "EOF"
+        for i in 1:n
             splitedRow = split(row)
-            x = parse(Int, splitedRow[2])
-            y = parse(Int, splitedRow[3])
+            x = parse(Float64, splitedRow[2])
+            y = parse(Float64, splitedRow[3])
             push!(locations, (x, y))
             row = readline(handle)
         end
