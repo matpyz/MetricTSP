@@ -14,18 +14,19 @@ end
 function parseGraphVLSI(filePath :: String) :: Tuple{Graph, Weights}
     return open(filePath) do handle
         row = readline(handle)
+        splitedRow = split(row)
+        while splitedRow[1] != "DIMENSION" && splitedRow[1] != "DIMENSION:"
+            row = readline(handle)
+            splitedRow = split(row)
+        end
+        n = parse(Int, splitedRow[length(splitedRow)])
         row = readline(handle)
         splitedRow = split(row)
-        while splitedRow[1] == "COMMENT" || splitedRow[1] == "COMMENT:"
+        while splitedRow[1] != "NODE_COORD_SECTION" && splitedRow[1] != "NODE_COORD_SECTION:"
             row = readline(handle)
             splitedRow = split(row)
         end
         row = readline(handle)
-        splitedRow = split(row)
-        n = parse(Int, splitedRow[length(splitedRow)])
-        for i in 1:3
-            row = readline(handle)
-        end
         w = Weights()
         locations = []
         for i in 1:n

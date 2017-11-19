@@ -9,10 +9,10 @@ using MinimumCostPerfectMatching
 using EulerianCycle
 
 # Christofides' algorithm
-function christofides(G :: Graph, w)
+function christofides(G :: Graph, w, minimumCostFunction :: Function)
   T = minimumSpanningTree(G, w)
   O = verticesOfOddDegree(G, T)
-  M = minimumCostPerfectMatching(O, w)
+  M = minimumCostFunction(O, w)
   graphUnion!(T, M)
   return eulerianCycleWithShortcuts!(T)
 end
