@@ -6,7 +6,8 @@ using Christofides
 
 filePath = input("Enter file name:")
 (G, w) = parseGraphVLSI(filePath)
-solution = christofides(G, w)
+time = @time solution = christofides(G, w)
+println("Time: ", time)
 cost = 0
 println(solution)
 n = length(solution)
